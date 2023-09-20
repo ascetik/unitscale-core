@@ -17,5 +17,9 @@
             "email": "ascetik@free.fr"
         }
     ],
+    "scripts": {
+        "test": "./vendor/bin/phpunit --testdox"
+      },
+    
     "require": {}
 }

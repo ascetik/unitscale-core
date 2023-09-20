@@ -7,16 +7,18 @@
     testdox="true"
 >
     <testsuites>
-        <testsuite name="Unit Scale">
+        <testsuite name="UnitScale">
             <file>tests/CustomScaleTest.php</file>
-            <!-- <file>tests/CustomScaleConverterTest.php</file>
+            <!--
+            <file>tests/CustomScaleConverterTest.php</file>
             <file>tests/MassScaleConverterTest.php</file>
             <file>tests/TimeScalesTest.php</file>
             <file>tests/TimeScaleConverterTest.php</file>
             <file>tests/ScaleContainerTest.php</file>
             <file>tests/CustomReductionTest.php</file>
             <file>tests/MassReductionTest.php</file>
-            <file>tests/TimeReductionTest.php</file> -->
+            <file>tests/TimeReductionTest.php</file>
+        -->
         </testsuite>
     </testsuites>
     <php>
