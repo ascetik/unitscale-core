@@ -4,7 +4,7 @@
  * This is part of the UnitScale package.
  *
  * @package    UnitScale
- * @category   Type
+ * @category   Interface
  * @license    https://opensource.org/license/mit/  MIT License
  * @copyright  Copyright (c) 2023, Vidda
  * @author     Vidda <vidda@ascetik.fr>
