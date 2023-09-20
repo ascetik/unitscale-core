@@ -14,6 +14,11 @@
 
 namespace Ascetik\UnitscaleCore\Types;
 
+/**
+ * Scale factory contract
+ *
+ * @version 1.0.0
+ */
 interface ScaleFactory
 {
     public function base(): Scale;
