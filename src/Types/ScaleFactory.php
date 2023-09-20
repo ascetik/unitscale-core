@@ -15,7 +15,7 @@
 namespace Ascetik\UnitscaleCore\Types;
 
 /**
- * Scale factory contract
+ * Build Scales
  *
  * @version 1.0.0
  */
