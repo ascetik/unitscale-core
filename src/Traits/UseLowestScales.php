@@ -16,6 +16,9 @@ namespace Ascetik\UnitscaleCore\Traits;
 
 use Ascetik\UnitscaleCore\Scales\CustomScale;
 
+/**
+ * @version 1.0.0
+ */
 trait UseLowestScales
 {
     public function milli()
