@@ -11,11 +11,20 @@
             "Ascetik\\UnitscaleCore\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Ascetik\\UnitscaleCore\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "ascetik",
             "email": "ascetik@free.fr"
         }
     ],
+    "scripts": {
+        "test": "./vendor/bin/phpunit --testdox"
+      },
+    
     "require": {}
 }
