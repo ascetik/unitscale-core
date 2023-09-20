@@ -11,6 +11,11 @@
             "Ascetik\\UnitscaleCore\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Ascetik\\UnitscaleCore\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "ascetik",
