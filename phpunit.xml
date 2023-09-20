@@ -8,7 +8,7 @@
 >
     <testsuites>
         <testsuite name="UnitScale">
-            <file>tests/CustomScaleTest.php</file>
+            <file>tests/ScaleTest.php</file>
             <!--
             <file>tests/CustomScaleConverterTest.php</file>
             <file>tests/MassScaleConverterTest.php</file>
