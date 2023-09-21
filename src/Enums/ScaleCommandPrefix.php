@@ -2,7 +2,7 @@
 /**
  * This is part of the unitscale-core package.
  *
- * @package    unitscale-core
+ * @package    unitscale-core-core
  * @category   Commands Enum
  * @license    https://opensource.org/license/mit/  MIT License
  * @copyright  Copyright (c) 2023, Vidda
@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace Ascetik\UnitscaleCore\Enums;
 
 /**
- * Available prefixes for any command
- * to use starting with *from* or *to*
+ * Available prefixes for any
+ * magic __call() method command
+ * starting with *from* or *to*
  *
  * @version 1.0.0
  */

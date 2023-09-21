@@ -3,7 +3,7 @@
 /**
  * This is part of the UnitScale package.
  *
- * @package    UnitScale
+ * @package    unitscale-core
  * @category   Scale Factory
  * @license    https://opensource.org/license/mit/  MIT License
  * @copyright  Copyright (c) 2023, Vidda
