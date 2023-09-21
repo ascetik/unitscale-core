@@ -15,6 +15,8 @@
 namespace Ascetik\UnitscaleCore\Parsers;
 
 use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
+use Ascetik\UnitscaleCore\Types\ConvertibleDimension;
+use Ascetik\UnitscaleCore\Types\ScaleDimension;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 use BadMethodCallException;
 
@@ -48,11 +50,11 @@ class ScaleCommandInterpreter
      * Translate the command to
      * convert a ScaleValue to another scale
      *
-     * @param  ScaleValue $value
+     * @param  ConvertibleDimension $value
      *
      * @return ScaleValue
      */
-    public function transpose(ScaleValue $value): ScaleValue
+    public function transpose(ConvertibleDimension $value): ScaleValue
     {
         return match ($this->command) {
             ScaleCommandPrefix::FROM => $value->withScale($this->action),
@@ -73,7 +75,7 @@ class ScaleCommandInterpreter
     public static function parse(string $method): self
     {
         if ($command = ScaleCommandPrefix::get($method)) {
-            $method = substr($method, strlen($command->value));
+            $method = substr($method, strlen($command->name));
             $action = strtolower($method);
             return new self($action, $command);
         }

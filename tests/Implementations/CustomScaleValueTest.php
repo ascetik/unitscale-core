@@ -21,22 +21,20 @@ class CustomScaleValueTest extends TestCase
     {
         $parser = ScaleCommandInterpreter::parse('fromBlah');
         $this->assertSame('blah', $parser->action);
-        $this->assertSame('from', $parser->command->value);
+        $this->assertSame('FROM', $parser->command->name);
     }
 
     public function testScaleCommandInterpreterWithToCommand()
     {
         $parser = ScaleCommandInterpreter::parse('toBlah');
         $this->assertSame('blah', $parser->action);
-        $this->assertSame('to', $parser->command->value);
+        $this->assertSame('TO', $parser->command->name);
     }
 
     public function testBadCommandShouldThrowAnException()
     {
         $this->expectException(BadMethodCallException::class);
         ScaleCommandInterpreter::parse('getBlah');
-        // $this->assertSame('blah',$parser->method);
-        // $this->assertSame('from', $parser->command->value);
     }
 
     public function testCustomScaleValueConvertionUsingFromCommand()
@@ -47,7 +45,6 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('1cm', (string) $value);
     }
 
-
     public function testCustomScaleValueConvertionUsingToCommand()
     {
         $value = new CustomScaleValue(1, unit: 'm');
@@ -56,4 +53,17 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('100cm', (string) $value);
     }
 
+    public function testCustomScaleValueWithBothCommands()
+    {
+        $value = new CustomScaleValue(1, unit: 'm');
+        $result = $value->fromCenti()->toMilli();
+        $this->assertSame('10mm', (string) $result);
+    }
+
+    public function testCustomScaleValueWithLargeTransposition()
+    {
+        $value = new CustomScaleValue(1000000, unit: 'm');
+        $result = $value->fromMilli()->toKilo();
+        $this->assertSame('1km', (string) $result);
+    }
 }

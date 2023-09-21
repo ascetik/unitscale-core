@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
-use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 
 /**
@@ -22,7 +21,7 @@ use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
  *
  * @version 1.0.0
  */
-abstract class ScaleValue
+abstract class ScaleValue implements ConvertibleDimension
 {
     protected readonly Scale $scale;
 
@@ -64,6 +63,11 @@ abstract class ScaleValue
         return $this->scale->unit();
     }
 
+    public function getScale(): Scale
+    {
+        return $this->scale;
+    }
+
     public function withValue(int|float $value): static
     {
         return $this->with($value, $this->scale);
@@ -86,16 +90,6 @@ abstract class ScaleValue
         $value = $scale->backward($value);
         return $this->with($value, $scale);
     }
-
-    abstract protected static function selector(): ScaleFactory;
-
-    private function getRealScale(string|Scale $scale): Scale
-    {
-        return is_string($scale)
-            ? static::createScale($scale)
-            : $scale;
-    }
-
     /**
      * Return the result of method
      * called $name from static class
@@ -115,4 +109,14 @@ abstract class ScaleValue
         }
         throw new \BadMethodCallException('The method ' . $name . ' does not exist');
     }
+
+    private function getRealScale(string|Scale $scale): Scale
+    {
+        return is_string($scale)
+            ? static::createScale($scale)
+            : $scale;
+    }
+
+    abstract protected static function selector(): ScaleFactory;
+
 }
