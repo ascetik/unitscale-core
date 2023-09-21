@@ -3,7 +3,7 @@
 /**
  * This is part of the UnitScale package.
  *
- * @package    UnitScale
+ * @package    unitscale-core
  * @category   Abstract Scale value
  * @license    https://opensource.org/license/mit/  MIT License
  * @copyright  Copyright (c) 2023, Vidda
@@ -14,6 +14,9 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
+use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
+use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
+
 /**
  * Handle general behaviours of a value holding a scale.
  *
@@ -21,13 +24,19 @@ namespace Ascetik\UnitscaleCore\Types;
  */
 abstract class ScaleValue
 {
-    private readonly Scale $scale;
+    protected readonly Scale $scale;
 
     public function __construct(
-        private readonly int|float $value,
+        protected readonly int|float $value,
         ?Scale $scale = null
     ) {
         $this->scale = $scale ?? static::createScale('base');
+    }
+
+    public function __call($method, $arguments)
+    {
+        $interpreter = ScaleCommandInterpreter::parse($method);
+        return $interpreter->transpose($this);
     }
 
     public function __toString()
@@ -57,12 +66,12 @@ abstract class ScaleValue
 
     public function withValue(int|float $value): static
     {
-        return new static($value, $this->scale);
+        return $this->with($value, $this->scale);
     }
 
     public function withScale(string|Scale $scale): static
     {
-        return new static($this->value, $this->getRealScale($scale));
+        return $this->with($this->value, $this->getRealScale($scale));
     }
 
     public function with(int|float $value, Scale $scale): static
@@ -72,15 +81,13 @@ abstract class ScaleValue
 
     public function convertTo(Scale|string $scale): static
     {
-        // if (is_string($scale)) {
-        //     $scale = static::createScale($scale);
-        // }
+        $scale = $this->getRealScale($scale);
         $value = $this->scale->forward($this->value);
-        $value = $this->getRealScale($scale)->backward($value);
+        $value = $scale->backward($value);
         return $this->with($value, $scale);
     }
 
-    abstract protected function selector(): ScaleFactory;
+    abstract protected static function selector(): ScaleFactory;
 
     private function getRealScale(string|Scale $scale): Scale
     {
@@ -88,6 +95,7 @@ abstract class ScaleValue
             ? static::createScale($scale)
             : $scale;
     }
+
     /**
      * Return the result of method
      * called $name from static class
