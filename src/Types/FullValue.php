@@ -22,5 +22,4 @@ namespace Ascetik\UnitscaleCore\Types;
  */
 interface FullValue extends ScaleDimension
 {
-    // TODO :  voir si on peut virer FullValue pour utiliser ScaleDimension à la place...
 }

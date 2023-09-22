@@ -46,7 +46,7 @@ class CustomFullValue implements FullValue
 
     public function __toString(): string
     {
-        return (string) $this->reference->highest(); // TODO : à changer par le ScaleReference plus tard
+        return (string) $this->reference->highest();
     }
 
     public function raw(): int|float
