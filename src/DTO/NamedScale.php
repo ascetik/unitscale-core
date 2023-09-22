@@ -17,6 +17,7 @@ namespace Ascetik\UnitscaleCore\DTO;
 use Ascetik\UnitscaleCore\Types\Scale;
 
 /**
+ * ScaleContainer item.
  * Carry a Scale attached to a name
  * as identifier
  *

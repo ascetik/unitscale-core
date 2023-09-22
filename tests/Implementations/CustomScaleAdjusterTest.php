@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ascetik\UnitscaleCore\Tests\Implementations;
 
 use Ascetik\UnitscaleCore\Factories\Scaler;
@@ -27,4 +29,6 @@ class CustomScaleAdjusterTest extends TestCase
         $adjusted = $value->adjust();
         $this->assertSame('3nm', (string) $adjusted);
     }
+
+    // TODO :  je n'ai pas fait de test sur les autres résultats... raw(), getUnit()...
 }
