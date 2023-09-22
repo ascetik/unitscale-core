@@ -2,6 +2,7 @@
 
 namespace Ascetik\UnitscaleCore\Tests\Implementations;
 
+use Ascetik\UnitscaleCore\Factories\Scaler;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
 use BadMethodCallException;
@@ -65,5 +66,11 @@ class CustomScaleValueTest extends TestCase
         $value = new CustomScaleValue(1000000, unit: 'm');
         $result = $value->fromMilli()->toKilo();
         $this->assertSame('1km', (string) $result);
+    }
+
+    public function testCustomScaleValueFactory()
+    {
+        $value = Scaler::calculate(2000000, 'm')->fromCenti()->toHecto();
+        $this->assertSame('200hm', (string) $value);
     }
 }
