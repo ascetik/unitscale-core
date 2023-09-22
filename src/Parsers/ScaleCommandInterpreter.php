@@ -16,7 +16,6 @@ namespace Ascetik\UnitscaleCore\Parsers;
 
 use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Types\ConvertibleDimension;
-use Ascetik\UnitscaleCore\Types\ScaleDimension;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 use BadMethodCallException;
 
