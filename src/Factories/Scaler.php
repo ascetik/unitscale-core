@@ -23,7 +23,7 @@ use Ascetik\UnitscaleCore\Values\CustomScaleValue;
  */
 class Scaler implements ScaleValueFactory
 {
-    public static function calculate(int|float $value, string $unit = ''): CustomScaleValue
+    public static function unit(int|float $value, string $unit = ''): CustomScaleValue
     {
         return new CustomScaleValue($value, unit: $unit);
     }

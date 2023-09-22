@@ -1,8 +1,9 @@
 # unitscale-core
+
 A scale converter for any unit
 
 This tool is able to convert a unit measurement multiple to another.
-You can convert an amount of _bytes_ to _megabytes_, *millimeters* to *kilometers* on so on or any unit from any multiple to any other.
+You can convert an amount of _bytes_ to _megabytes_, _millimeters_ to _kilometers_ on so on or any unit from any multiple to any other.
 
 ## Release notes :
 
@@ -11,59 +12,54 @@ You can convert an amount of _bytes_ to _megabytes_, *millimeters* to *kilometer
 - behaviour abstraction : to re-use for extensions
 - main implementation : specify the unit to use, the scale to start from and the scale to get finally.
 
-## Converter Instances
-
-A **UnitScaler** factory provides converters statically.
-
 ### Custom conversion
 
-The main converter is provided by _convert()_ method :
+Use **Scaler** factory to build a unit object. It just needs a value and the unit to use.
+Returned instance has default scale (no unit prefix).
 
 ```php
 
-$converter = CustomScaler::convert(3000, 'b');
+$unit = Scaler::unit(3000, 'b');
 
 ```
 
-The first argument is the dimension value, the second one is the unit. Here, we want to convert 3000 bytes.
+The first argument is the dimension amount, the second one is the unit to use. Here, we want to convert 3000 bytes.
 
-This call returns an instance encapsulating value input, unit input and default base scale.
+This call returns an instance with the amount, given unit and default base scale (no unit prefix).
+
 To get those outputs :
 
 ```php
 
-echo $converter->litteral(); // prints '3000b'
-echo $converter->raw(); // prints '3000'
+echo $unit; // Stringable, prints '3000b'
+echo $converter->raw(); // prints 3000
 echo $converter->getUnit(); // prints 'b'
 
 ```
 
-To change multiple to use as source :
+To change source scale :
 
 ```php
 
-$kilo = $converter->fromKilo(); // $kilo is a new converter with its own values
-echo $kilo->litteral(); // prints '3000kb'
+$kilo = $unit->fromKilo(); // $kilo is a new unit with its own values
+echo $kilo; // prints '3000kb'
 echo $kilo->raw(); // prints '3000'
 echo $kilo->getUnit(); // prints 'kb'
 
-$mega = $converter->fromMega();
-echo $mega->litteral(); // prints '3000Mb'
+$mega = $unit->fromMega();
+echo $mega; // prints '3000Mb'
 echo $mega->raw(); // prints '3000', either string or float, useful for strict comparison
 echo $mega->getUnit(); // prints 'Mb'
 
-echo $converter->litteral(); // still prints '3000b'
+echo $unit; // still prints '3000b'
 
 ```
 
-Converter calls are fluable.
-To get your conversion at once, just use :
+Fluable methods allow chained calls. To get your conversion at once :
 
 ```php
 
-echo $converter
-    ->fromKilo()
-    ->toMega()
-    ->litteral(); // prints '3Mb'
+echo $converter->fromKilo()->toMega(); // prints '3Mb'
 
 ```
+
