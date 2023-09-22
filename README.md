@@ -41,15 +41,14 @@ To change source scale :
 
 ```php
 
-$kilo = $unit->fromKilo(); // $kilo is a new unit with its own values
-echo $kilo; // prints '3000kb'
-echo $kilo->raw(); // prints '3000'
-echo $kilo->getUnit(); // prints 'kb'
+echo $unit->fromKilo(); // prints '3000kb'
 
-$mega = $unit->fromMega();
-echo $mega; // prints '3000Mb'
-echo $mega->raw(); // prints '3000', either string or float, useful for strict comparison
-echo $mega->getUnit(); // prints 'Mb'
+```
+And to get final unit :
+
+```php
+
+echo $unit->toKilo(); // prints '3kb'
 
 echo $unit; // still prints '3000b'
 
@@ -59,7 +58,7 @@ Fluable methods allow chained calls. To get your conversion at once :
 
 ```php
 
-echo $converter->fromKilo()->toMega(); // prints '3Mb'
+echo $unit->fromKilo()->toMega(); // prints '3Mb'
 
 ```
 
