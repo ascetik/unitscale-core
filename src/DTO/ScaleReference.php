@@ -51,7 +51,7 @@ class ScaleReference
     public function highest(): ScaleValue
     {
         $value = clone $this->value;
-        /** @var ScaleWrapper $wrapper */
+        /** @var NamedScale $wrapper */
         foreach ($this->scales->content()->toArray() as $wrapper) {
             $newValue = $this->value->convertTo($wrapper->name);
             if (

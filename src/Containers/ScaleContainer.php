@@ -15,13 +15,13 @@ declare(strict_types=1);
 namespace Ascetik\UnitscaleCore\Containers;
 
 use Ascetik\Storage\Box;
-use Ascetik\UnitscaleCore\DTO\ScaleWrapper;
+use Ascetik\UnitscaleCore\DTO\NamedScale;
 use Ascetik\UnitscaleCore\Types\Scale;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 use ReflectionClass;
 
 /**
- * Handle a storage of ScaleWrappers
+ * Handle a storage of NamedScales
  * to be used as encapsulated pairs of
  * method name / Scale
  *
@@ -42,7 +42,7 @@ class ScaleContainer
     public function find(Scale $scale)
     {
         return $this->stack->find(
-            fn (ScaleWrapper $wrapper) => $wrapper->contains($scale)
+            fn (NamedScale $wrapper) => $wrapper->contains($scale)
         );
     }
 
@@ -60,7 +60,7 @@ class ScaleContainer
             if (!in_array($reflectMethod->name, $value::EXCLUDE)) {
                 /** @var Scale $scale */
                 $scale = $reflectMethod->invoke($selector);
-                $wrapper = new ScaleWrapper($reflectMethod->name, $scale);
+                $wrapper = new NamedScale($reflectMethod->name, $scale);
                 $stack[$scale->factor()] = $wrapper;
             }
         }

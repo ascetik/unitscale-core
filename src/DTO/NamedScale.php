@@ -16,14 +16,13 @@ namespace Ascetik\UnitscaleCore\DTO;
 
 use Ascetik\UnitscaleCore\Types\Scale;
 
-
 /**
  * Carry a Scale attached to a name
  * as identifier
  *
  * @version 1.0.0
  */
-class ScaleWrapper
+class NamedScale
 {
     public function __construct(
         public readonly string $name,
