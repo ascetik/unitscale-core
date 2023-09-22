@@ -11,6 +11,7 @@
             <file>tests/ScaleTest.php</file>
             <file>tests/Implementations/CustomScaleTest.php</file>
             <file>tests/Implementations/CustomScaleFactoryTest.php</file>
+            <file>tests/Implementations/CustomScaleValueTest.php</file>
             <!--
             <file>tests/MassScaleConverterTest.php</file>
             <file>tests/TimeScalesTest.php</file>
