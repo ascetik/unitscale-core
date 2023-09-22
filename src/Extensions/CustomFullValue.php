@@ -2,15 +2,20 @@
 
 namespace Ascetik\UnitscaleCore\Extensions;
 
+use Ascetik\UnitscaleCore\DTO\ScaleReference;
+use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
+use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 use Ascetik\UnitscaleCore\Types\FullValue;
 use Ascetik\UnitscaleCore\Types\Scale;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
 
 class CustomFullValue implements FullValue
 {
+    private ScaleReference $reference;
     public function __construct(
-        private CustomScaleValue $value
+        CustomScaleValue $value
     ) {
+        $this->reference = new ScaleReference($value);
         /**
          * Au dernier essai, on utilisait un ScaleReference.
          * C'est toujours une bonne idée. Et du coup : on a deux choix :
@@ -36,23 +41,31 @@ class CustomFullValue implements FullValue
          */
     }
 
+    public function __call($name, $arguments): static
+    {
+        $parser = ScaleCommandInterpreter::get($name, ScaleCommandPrefix::TO);
+        $limit = $this->reference->value::createScale($parser->action);
+        $this->reference->limitTo($limit);
+        return $this;
+    }
+
     public function __toString(): string
     {
-        return (string) $this->value; // TODO : à changer par le ScaleReference plus tard
+        return (string) $this->reference->highest(); // TODO : à changer par le ScaleReference plus tard
     }
 
     public function raw(): int|float
     {
-        return $this->value->raw(); // TODO : à revoir peut-être
+        return $this->reference->value->raw(); // TODO : à revoir peut-être
     }
 
     public function getScale(): Scale
     {
-        return $this->value->getScale(); // TODO : y revenir, donc
+        return $this->reference->value->getScale(); // TODO : y revenir, donc
     }
 
     public function getUnit(): string
     {
-        return $this->value->getUnit(); // TODO : je me repete...
+        return $this->reference->value->getUnit(); // TODO : je me repete...
     }
 }
