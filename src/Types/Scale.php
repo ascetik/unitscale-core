@@ -46,7 +46,6 @@ interface Scale
     /**
      * Return the factor used for calculation
      *
-     * @deprecated ??
      * @return int|float
      */
     public function factor(): int|float;
