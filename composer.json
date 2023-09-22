@@ -26,5 +26,7 @@
         "test": "./vendor/bin/phpunit --testdox"
       },
     
-    "require": {}
+    "require": {
+        "ascetik/storage": "^0.2"
+    }
 }
