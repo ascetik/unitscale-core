@@ -23,6 +23,8 @@ use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
  */
 abstract class ScaleValue implements ConvertibleDimension
 {
+    public const EXCLUDE = [];
+
     protected readonly Scale $scale;
 
     public function __construct(
@@ -118,5 +120,5 @@ abstract class ScaleValue implements ConvertibleDimension
             : $scale;
     }
 
-    abstract protected static function selector(): ScaleFactory;
+    abstract public static function selector(): ScaleFactory;
 }

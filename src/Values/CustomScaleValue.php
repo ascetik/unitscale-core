@@ -85,7 +85,7 @@ class CustomScaleValue extends ScaleValue
     }
     
     /** @abstract */
-    protected static function selector(): CustomScaleFactory
+    public static function selector(): CustomScaleFactory
     {
         return new CustomScaleFactory();
     }
