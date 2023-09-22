@@ -70,7 +70,7 @@ class CustomScaleValueTest extends TestCase
 
     public function testCustomScaleValueFactory()
     {
-        $value = Scaler::calculate(2000000, 'm')->fromCenti()->toHecto();
-        $this->assertSame('200hm', (string) $value);
+        $unit = Scaler::unit(2000000, 'm')->fromCenti()->toHecto();
+        $this->assertSame('200hm', (string) $unit);
     }
 }

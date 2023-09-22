@@ -21,5 +21,5 @@ namespace Ascetik\UnitscaleCore\Types;
  */
 interface ScaleValueFactory
 {
-    public static function calculate(int|float $value, string $unit = ''): ConvertibleDimension;
+    public static function unit(int|float $value, string $unit = ''): ConvertibleDimension;
 }
