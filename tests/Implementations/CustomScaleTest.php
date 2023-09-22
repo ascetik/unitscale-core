@@ -34,7 +34,7 @@ class CustomScaleTest extends TestCase
 
     public function testScaleFactor()
     {
+        // TODO : voir si la méthod factor sert vraiment à qqchose.
         $this->assertSame(3, $this->scale->factor());
     }
-
 }
