@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * This is part of the UnitScale package.
+ *
+ * @package    UnitScale
+ * @category   Data Transfer Object
+ * @license    https://opensource.org/license/mit/  MIT License
+ * @copyright  Copyright (c) 2023, Vidda
+ * @author     Vidda <vidda@ascetik.fr>
+ */
+
+declare(strict_types=1);
+
+namespace Ascetik\UnitscaleCore\DTO;
+
+use Ascetik\UnitscaleCore\Containers\ScaleContainer;
+use Ascetik\UnitscaleCore\Types\Scale;
+use Ascetik\UnitscaleCore\Types\ScaleValue;
+
+/**
+ * ScaleValue extension handling Scale adjustment
+ *
+ * @version 1.0.0
+ */
+class ScaleReference
+{
+    public readonly ScaleContainer $scales;
+
+    protected ?Scale $highest = null;
+
+    public function __construct(
+        public readonly ScaleValue $value,
+        ScaleContainer $scales = null
+    ) {
+        $this->scales = $scales ?? ScaleContainer::buildFrom($value);
+    }
+
+    public function limitTo(?Scale $scale)
+    {
+        $this->highest = $scale;
+    }
+
+    /**
+     * Return a new ScaleValue with the
+     * highest scale it can have,
+     * dependeing on highestScale if set
+     *
+     * @return ScaleValue
+     */
+    public function highest(): ScaleValue
+    {
+        $value = clone $this->value;
+        /** @var ScaleWrapper $wrapper */
+        foreach ($this->scales->content()->toArray() as $wrapper) {
+            $newValue = $this->value->convertTo($wrapper->name);
+            if (
+                $newValue->raw() < 1 ||
+                $this->hasHighestScale($wrapper->scale)
+            ) {
+                break;
+            }
+            $value = $newValue;
+        }
+        $this->limitTo(null);
+        return $value;
+    }
+
+    private function hasHighestScale(Scale $scale): bool
+    {
+        if ($this->highest === null) {
+            return false;
+        }
+        return  $scale->factor() > $this->highest->factor();
+    }
+}
