@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is part of the UnitScale package.
+ * This is part of the UnitScale Core package.
  *
  * @package    unitscale-core
  * @category   Abstract Scale value
@@ -68,28 +68,29 @@ abstract class ScaleValue implements ConvertibleDimension
         return $this->scale;
     }
 
-    public function withValue(int|float $value): static
-    {
-        return $this->with($value, $this->scale);
-    }
-
-    public function withScale(string|Scale $scale): static
-    {
-        return $this->with($this->value, $this->getRealScale($scale));
-    }
-
     public function with(int|float $value, Scale $scale): static
     {
         return new static($value, $scale);
     }
 
-    public function convertTo(Scale|string $scale): static
+    final public function withValue(int|float $value): static
+    {
+        return $this->with($value, $this->scale);
+    }
+
+    final public function withScale(string|Scale $scale): static
+    {
+        return $this->with($this->value, $this->getRealScale($scale));
+    }
+
+    final public function convertTo(Scale|string $scale): static
     {
         $scale = $this->getRealScale($scale);
         $value = $this->scale->forward($this->value);
         $value = $scale->backward($value);
         return $this->with($value, $scale);
     }
+
     /**
      * Return the result of method
      * called $name from static class
@@ -100,7 +101,7 @@ abstract class ScaleValue implements ConvertibleDimension
      *
      * @return Scale
      */
-    public static function createScale(string $name): Scale
+    final public static function createScale(string $name): Scale
     {
         $name = strtolower($name);
         $data = [static::selector(), $name];
@@ -118,5 +119,4 @@ abstract class ScaleValue implements ConvertibleDimension
     }
 
     abstract protected static function selector(): ScaleFactory;
-
 }

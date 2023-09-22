@@ -15,13 +15,11 @@ declare(strict_types=1);
 namespace Ascetik\UnitscaleCore\Factories;
 
 use Ascetik\UnitscaleCore\Scales\CustomScale;
-use Ascetik\UnitscaleCore\Traits\UseHighestScales;
-use Ascetik\UnitscaleCore\Traits\UseIntermediateScales;
-use Ascetik\UnitscaleCore\Traits\UseLowestScales;
 use Ascetik\UnitscaleCore\Types\ScaleFactory;
 
 /**
  * Build CustomScales
+ * from pico to tera
  *
  * @version 1.0.0
  */
