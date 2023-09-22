@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Ascetik\UnitScale\Containers;
+namespace Ascetik\UnitscaleCore\Containers;
 
 use Ascetik\Storage\Box;
 use Ascetik\UnitscaleCore\DTO\ScaleWrapper;
