@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Ascetik\UnitScale\Types;
+namespace Ascetik\UnitscaleCore\Types;
 
 /**
  * Use this interface to identify any ScaleValue
@@ -20,7 +20,7 @@ namespace Ascetik\UnitScale\Types;
  *
  * @version 1.0.0
  */
-interface FullValue
+interface FullValue extends ScaleDimension
 {
-    //
+    // TODO :  voir si on peut virer FullValue pour utiliser ScaleDimension à la place...
 }
