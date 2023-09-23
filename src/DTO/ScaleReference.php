@@ -27,18 +27,20 @@ class ScaleReference
 {
     public readonly ScaleContainer $scales;
 
-    protected ?Scale $highest = null;
+    private ScaleValue $adjusted;
 
     public function __construct(
         public readonly ScaleValue $value,
-        ScaleContainer $scales = null
+        ScaleContainer $scales = null,
+        protected ?Scale $highest = null
     ) {
         $this->scales = $scales ?? ScaleContainer::buildFrom($value);
     }
 
-    public function limitTo(?Scale $scale)
+    public function limitTo(string $action): self
     {
-        $this->highest = $scale;
+        $limit = $this->value::createScale($action);
+        return new self($this->value, $this->scales, $limit);
     }
 
     /**
@@ -50,20 +52,22 @@ class ScaleReference
      */
     public function highest(): ScaleValue
     {
-        $value = clone $this->value;
-        /** @var NamedScale $wrapper */
-        foreach ($this->scales->content()->toArray() as $wrapper) {
-            $newValue = $this->value->convertTo($wrapper->name);
-            if (
-                $newValue->raw() < 1 ||
-                $this->hasHighestScale($wrapper->scale)
-            ) {
-                break;
+        if (!isset($this->adjusted)) {
+            $value = clone $this->value;
+            /** @var NamedScale $wrapper */
+            foreach ($this->scales->content()->toArray() as $wrapper) {
+                $newValue = $this->value->convertTo($wrapper->name);
+                if (
+                    $newValue->raw() < 1 ||
+                    $this->hasHighestScale($wrapper->scale)
+                ) {
+                    break;
+                }
+                $value = $newValue;
             }
-            $value = $newValue;
+            $this->adjusted = $value;
         }
-        $this->limitTo(null);
-        return $value;
+        return $this->adjusted;
     }
 
     private function hasHighestScale(Scale $scale): bool
