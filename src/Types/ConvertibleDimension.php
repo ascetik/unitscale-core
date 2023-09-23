@@ -26,5 +26,5 @@ interface ConvertibleDimension extends ScaleDimension
     public function withScale(string|Scale $scale): self;
     public function convertTo(Scale|string $scale): self;
     public function with(int|float $value, Scale $scale): self;
-    public function adjust(): FullValue;
+    public function adjust(): AdjustedValue;
 }

@@ -16,6 +16,7 @@ namespace Ascetik\UnitscaleCore\Values;
 
 use Ascetik\UnitscaleCore\Extensions\CustomFullValue;
 use Ascetik\UnitscaleCore\Factories\CustomScaleFactory;
+use Ascetik\UnitscaleCore\Types\AdjustedValue;
 use Ascetik\UnitscaleCore\Types\FullValue;
 use Ascetik\UnitscaleCore\Types\Scale;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
@@ -79,9 +80,9 @@ class CustomScaleValue extends ScaleValue
         return new self($value, $scale, $this->unit);
     }
 
-    public function adjust(): CustomFullValue
+    public function adjust(): AdjustedValue
     {
-       return CustomFullValue::buildWith($this);
+       return AdjustedValue::buildWith($this);
     }
     
     /** @abstract */
