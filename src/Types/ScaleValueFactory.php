@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
+use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
+
 /**
  * Build ScaleValues
  *
@@ -22,4 +24,5 @@ namespace Ascetik\UnitscaleCore\Types;
 interface ScaleValueFactory
 {
     public static function unit(int|float $value, string $unit = ''): ConvertibleDimension;
+    public static function adjust(int|float $value, string $unit = ''): AdjustedValue;
 }

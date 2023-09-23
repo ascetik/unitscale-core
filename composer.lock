@@ -4,8 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccdf52454c23e02760acd0fd6c0120d8",
-    "packages": [],
+    "content-hash": "e9ac05cd3699e10e62428b64c6fc5b70",
+    "packages": [
+        {
+            "name": "ascetik/storage",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ascetik/storage.git",
+                "reference": "f1c7f98511cc8194a98573ff8fd42c309d14817a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ascetik/storage/zipball/f1c7f98511cc8194a98573ff8fd42c309d14817a",
+                "reference": "f1c7f98511cc8194a98573ff8fd42c309d14817a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ascetik\\Storage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ascetik",
+                    "email": "ascetik@free.fr"
+                }
+            ],
+            "description": "Simple SplObjectStorage extension",
+            "support": {
+                "issues": "https://github.com/ascetik/storage/issues",
+                "source": "https://github.com/ascetik/storage/tree/v0.2.0"
+            },
+            "time": "2023-09-19T17:32:00+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "myclabs/deep-copy",
@@ -1626,7 +1667,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.0|^8.1|^8.2"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }

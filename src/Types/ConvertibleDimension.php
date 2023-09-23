@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
-use Ascetik\UnitscaleCore\Types\Scale;
+use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
 
 /**
  * Main behaviour for any instance
@@ -28,4 +28,5 @@ interface ConvertibleDimension extends ScaleDimension
     public function withScale(string|Scale $scale): self;
     public function convertTo(Scale|string $scale): self;
     public function with(int|float $value, Scale $scale): self;
+    public function adjust(): AdjustedValue;
 }

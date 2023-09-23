@@ -62,3 +62,35 @@ echo $unit->fromKilo()->toMega(); // prints '3Mb'
 
 ```
 
+## Scale adjustment
+
+You get sometimes a big amount of any unit from any computation and need to reduce this amount in the adapted scale.
+
+It is possible by using *adjust()* factory method to get the highest scale the amount can get :
+
+```php
+$adjusted  = Scaler::adjust(3000, 'm');
+echo $adjusted; // prints '3km'
+
+```
+
+You can also limit this adjustment to a littler scale :
+
+```php
+echo Scaler::adjust(3000, 'm')->toHecto(); // prints '30hm'
+
+echo Scaler::adjust(3000, 'm')->toCenti(); // prints '300000cm'
+
+```
+
+The unit returned by Scaler is able to perform adjustment. So, adjustment can be done from any scale :
+
+```php
+echo Scaler::unit(30000, 'm')
+    ->fromMilli()
+    ->adjust()
+    ->toKilo(); // prints '30m', amount is not enough to get to kilo
+    
+```
+
+

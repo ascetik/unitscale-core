@@ -10,7 +10,7 @@
  * @author     Vidda <vidda@ascetik.fr>
  */
 
- declare(strict_types=1);
+declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Parsers;
 
@@ -59,6 +59,23 @@ class ScaleCommandInterpreter
             ScaleCommandPrefix::FROM => $value->withScale($this->action),
             ScaleCommandPrefix::TO => $value->convertTo($this->action),
         };
+    }
+
+    /**
+     * Return self instance using given available command
+     *
+     * @param  string             $command
+     * @param  ScaleCommandPrefix $useOnly
+     *
+     * @return self
+     */
+    public static function get(string $command, ScaleCommandPrefix $useOnly): self
+    {
+        if (!str_starts_with($command, strtolower($useOnly->name))) {
+            self::throw($command);
+        }
+        $method = substr($command, strlen($useOnly->name));
+        return new self($method, $useOnly);
     }
 
     /**
