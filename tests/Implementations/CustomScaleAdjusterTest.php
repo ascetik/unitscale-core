@@ -11,32 +11,29 @@ class CustomScaleAdjusterTest extends TestCase
 {
     public function testShouldAdjustFromBaseToKilo()
     {
-        $value = Scaler::unit(3000, 'm');
-        $adjusted = $value->adjust();
-        $this->assertSame('3km', (string) $adjusted);
-        $this->assertSame(3, $adjusted->raw());
+        $value = Scaler::adjust(3000, 'm');
+        // $adjusted = $value->adjust();
+        $this->assertSame('3km', (string) $value);
+        $this->assertSame(3, $value->raw());
     }
 
     public function testShouldAdjustFromBaseStoppingAtHecto()
     {
-        $value = Scaler::unit(3000, 'm');
-        $adjusted = $value->adjust()->toHecto();
-        $this->assertSame('30hm', (string) $adjusted);
-        $this->assertSame(30, $adjusted->raw());
+        $value = Scaler::adjust(3000, 'm')->toHecto();
+        $this->assertSame('30hm', (string) $value);
+        $this->assertSame(30, $value->raw());
     }
 
     public function testShouldIncreaseAmountAndDecreaseScale()
     {
-        $value = Scaler::unit(0.003, 'm');
-        $adjusted = $value->adjust();
-        $this->assertSame('3mm', (string) $adjusted);
+        $value = Scaler::adjust(0.003, 'm');
+        $this->assertSame('3mm', (string) $value);
     }
 
     public function testShouldAdaptStartingFromADifferentScale()
     {
-        $value = Scaler::unit(0.003, 'm')->fromMicro();
-        $adjusted = $value->adjust();
-        $this->assertSame('3nm', (string) $adjusted);
+        $value = Scaler::adjust(0.003, 'm')->fromMicro();
+        $this->assertSame('3nm', (string) $value);
     }
 
     public function testShouldAdaptStartingFromAdifferentScaleAndLimitedToAnother()
@@ -47,5 +44,4 @@ class CustomScaleAdjusterTest extends TestCase
             ->toKilo();
         $this->assertSame('3000km', (string) $adjusted);
     }
-    // TODO :  je n'ai pas fait de test sur les autres résultats... raw(), getUnit()...
 }
