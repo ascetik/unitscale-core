@@ -47,7 +47,7 @@ abstract class ScaleValue implements ConvertibleDimension
 
     public function raw(): int|float
     {
-        return $this->value;
+        return $this->round();
     }
 
     public function integer(): int
@@ -118,6 +118,20 @@ abstract class ScaleValue implements ConvertibleDimension
         return is_string($scale)
             ? static::createScale($scale)
             : $scale;
+    }
+
+    /**
+     * Return the value with correct type
+     *
+     * @param  int       $precision
+     *
+     * @return float|int
+     */
+    protected function round($precision = 12): float|int
+    {
+        $float = round($this->value, $precision);
+        $int = intval($this->value);
+        return ($int == $float) ? $int : $float;
     }
 
     abstract public static function selector(): ScaleFactory;
