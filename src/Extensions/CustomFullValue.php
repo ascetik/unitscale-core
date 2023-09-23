@@ -44,10 +44,13 @@ use Ascetik\UnitscaleCore\Values\CustomScaleValue;
  */
 class CustomFullValue implements FullValue
 {
-    
+    private CustomScaleValue $highest;
+
     public function __construct(
         private ScaleReference $reference
     ) {
+        $this->highest = $this->reference->highest();
+
     }
 
     public function __call($name, $arguments): static
@@ -58,25 +61,25 @@ class CustomFullValue implements FullValue
 
     public function __toString(): string
     {
-        return (string) $this->reference->highest();
+        return (string) $this->highest;
     }
 
     public function raw(): int|float
     {
-        return $this->reference->highest()->raw(); // TODO : à revoir peut-être
+        return $this->highest->raw(); // TODO : à revoir peut-être
     }
 
     public function getScale(): Scale
     {
-        return $this->reference->highest()->getScale(); // TODO : y revenir, donc
+        return $this->highest->getScale(); // TODO : y revenir, donc
     }
 
     public function getUnit(): string
     {
-        return $this->reference->highest()->getUnit(); // TODO : je me repete...
+        return $this->highest->getUnit(); // TODO : je me repete...
     }
 
-    public static function buildWith(ScaleValue $value)
+    public static function buildWith(ScaleValue $value): self
     {
         $reference = new ScaleReference($value);
         return new self($reference);
