@@ -19,29 +19,41 @@ use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 use Ascetik\UnitscaleCore\Types\FullValue;
 use Ascetik\UnitscaleCore\Types\Scale;
+use Ascetik\UnitscaleCore\Types\ScaleValue;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
 
 /**
  * Full value handling adjustment
  * for a CustomScaleValue
  *
+ * @method static toTera()
+ * @method static toGiga()
+ * @method static toMega()
+ * @method static toKilo()
+ * @method static toHecto()
+ * @method static toDeca()
+ * @method static toBase()
+ * @method static toDeci()
+ * @method static toCenti()
+ * @method static toMilli()
+ * @method static toMicro()
+ * @method static toNano()
+ * @method static toPico()
+ *
  * @version 1.0.0
  */
 class CustomFullValue implements FullValue
 {
-    private ScaleReference $reference;
+    
     public function __construct(
-        CustomScaleValue $value
+        private ScaleReference $reference
     ) {
-        $this->reference = new ScaleReference($value);
     }
 
     public function __call($name, $arguments): static
     {
         $parser = ScaleCommandInterpreter::get($name, ScaleCommandPrefix::TO);
-        $limit = $this->reference->value::createScale($parser->action);
-        $this->reference->limitTo($limit);
-        return $this;
+        return new self($this->reference->limitTo($parser->action));
     }
 
     public function __toString(): string
@@ -51,16 +63,27 @@ class CustomFullValue implements FullValue
 
     public function raw(): int|float
     {
-        return $this->reference->value->raw(); // TODO : à revoir peut-être
+        return $this->reference->highest()->raw(); // TODO : à revoir peut-être
     }
 
     public function getScale(): Scale
     {
-        return $this->reference->value->getScale(); // TODO : y revenir, donc
+        return $this->reference->highest()->getScale(); // TODO : y revenir, donc
     }
 
     public function getUnit(): string
     {
-        return $this->reference->value->getUnit(); // TODO : je me repete...
+        return $this->reference->highest()->getUnit(); // TODO : je me repete...
+    }
+
+    public function highest(): ScaleValue
+    {
+        return $this->reference->highest();
+    }
+
+    public static function buildWith(ScaleValue $value)
+    {
+        $reference = new ScaleReference($value);
+        return new self($reference);
     }
 }
