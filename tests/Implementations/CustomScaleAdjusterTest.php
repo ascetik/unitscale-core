@@ -12,9 +12,13 @@ class CustomScaleAdjusterTest extends TestCase
     public function testShouldAdjustFromBaseToKilo()
     {
         $value = Scaler::adjust(3000, 'm');
-        // $adjusted = $value->adjust();
         $this->assertSame('3km', (string) $value);
         $this->assertSame(3, $value->raw());
+    }
+    public function testShouldAdjustToScaleLittlerThanBase()
+    {
+        $value = Scaler::adjust(3000, 'm')->toCenti();
+        $this->assertSame('300000cm', (string) $value);
     }
 
     public function testShouldAdjustFromBaseStoppingAtHecto()
