@@ -79,9 +79,9 @@ class CustomScaleValue extends ScaleValue
         return new self($value, $scale, $this->unit);
     }
 
-    public function adjust(): FullValue
+    public function adjust(): CustomFullValue
     {
-        return new CustomFullValue($this);
+       return CustomFullValue::buildWith($this);
     }
     
     /** @abstract */
