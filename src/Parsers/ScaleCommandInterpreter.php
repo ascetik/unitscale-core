@@ -74,7 +74,7 @@ class ScaleCommandInterpreter
         if (!str_starts_with($command, strtolower($useOnly->name))) {
             self::throw($command);
         }
-        $method = substr($command, strlen($useOnly->value));
+        $method = substr($command, strlen($useOnly->name));
         return new self($method, $useOnly);
     }
 

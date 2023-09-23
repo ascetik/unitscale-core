@@ -76,11 +76,6 @@ class CustomFullValue implements FullValue
         return $this->reference->highest()->getUnit(); // TODO : je me repete...
     }
 
-    public function highest(): ScaleValue
-    {
-        return $this->reference->highest();
-    }
-
     public static function buildWith(ScaleValue $value)
     {
         $reference = new ScaleReference($value);
