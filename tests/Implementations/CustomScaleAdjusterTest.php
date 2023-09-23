@@ -9,11 +9,21 @@ use PHPUnit\Framework\TestCase;
 
 class CustomScaleAdjusterTest extends TestCase
 {
-    public function testSimpleAdjustment()
+    public function testShouldAdjustFromBaseToKilo()
     {
         $value = Scaler::unit(3000, 'm');
         $adjusted = $value->adjust();
         $this->assertSame('3km', (string) $adjusted);
+        $this->assertSame(3,  $adjusted->raw());
+    }
+
+    public function testShouldAdjustFromBaseStoppingAtHecto()
+    {
+        $value = Scaler::unit(3000, 'm');
+        $adjusted = $value->adjust()->toHecto();
+        $this->assertSame('30hm', (string) $adjusted);
+        $this->assertSame(30,  $adjusted->raw());
+
     }
 
     public function testAnotherAdjustment()
