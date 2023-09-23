@@ -9,8 +9,7 @@ You can convert an amount of _bytes_ to _megabytes_, _millimeters_ to _kilometer
 
 > version 0.2.0
 
-- behaviour abstraction : to re-use for extensions
-- main implementation : specify the unit to use, the scale to start from and the scale to get finally.
+- Scale adjustment : you can adjust the scale depending of the amount you have.
 
 ### Custom conversion
 
@@ -90,7 +89,7 @@ echo Scaler::unit(30000, 'm')
     ->fromMilli()
     ->adjust()
     ->toKilo(); // prints '30m', amount is not enough to get to kilo
-    
+
 ```
 
 
