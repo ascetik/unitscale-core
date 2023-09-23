@@ -25,9 +25,13 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
  */
 class ScaleReference
 {
+    /**
+     * Contains Scales adapted
+     * to the registered value
+     *
+     * @var ScaleContainer
+     */
     public readonly ScaleContainer $scales;
-
-    private ScaleValue $adjusted;
 
     public function __construct(
         public readonly ScaleValue $value,
@@ -52,22 +56,19 @@ class ScaleReference
      */
     public function highest(): ScaleValue
     {
-        if (!isset($this->adjusted)) {
-            $value = clone $this->value;
-            /** @var NamedScale $wrapper */
-            foreach ($this->scales->content()->toArray() as $wrapper) {
-                $newValue = $this->value->convertTo($wrapper->name);
-                if (
-                    $newValue->raw() < 1 ||
-                    $this->hasHighestScale($wrapper->scale)
-                ) {
-                    break;
-                }
-                $value = $newValue;
+        $value = $this->value;
+        /** @var NamedScale $wrapper */
+        foreach ($this->scales->content()->toArray() as $wrapper) {
+            $newValue = $this->value->convertTo($wrapper->name);
+            if (
+                $newValue->raw() < 1 ||
+                $this->hasHighestScale($wrapper->scale)
+            ) {
+                break;
             }
-            $this->adjusted = $value;
+            $value = $newValue;
         }
-        return $this->adjusted;
+        return $value;
     }
 
     private function hasHighestScale(Scale $scale): bool
