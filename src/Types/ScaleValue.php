@@ -23,6 +23,8 @@ use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
  */
 abstract class ScaleValue implements ConvertibleDimension
 {
+    public const EXCLUDE = [];
+
     protected readonly Scale $scale;
 
     public function __construct(
@@ -45,7 +47,7 @@ abstract class ScaleValue implements ConvertibleDimension
 
     public function raw(): int|float
     {
-        return $this->value;
+        return $this->round();
     }
 
     public function integer(): int
@@ -118,5 +120,19 @@ abstract class ScaleValue implements ConvertibleDimension
             : $scale;
     }
 
-    abstract protected static function selector(): ScaleFactory;
+    /**
+     * Return the value with correct type
+     *
+     * @param  int       $precision
+     *
+     * @return float|int
+     */
+    protected function round($precision = 12): float|int
+    {
+        $float = round($this->value, $precision);
+        $int = intval($this->value);
+        return ($int == $float) ? $int : $float;
+    }
+
+    abstract public static function selector(): ScaleFactory;
 }
