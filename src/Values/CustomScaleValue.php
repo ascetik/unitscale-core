@@ -14,10 +14,8 @@
 
 namespace Ascetik\UnitscaleCore\Values;
 
-use Ascetik\UnitscaleCore\Extensions\CustomFullValue;
+use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
 use Ascetik\UnitscaleCore\Factories\CustomScaleFactory;
-use Ascetik\UnitscaleCore\Types\AdjustedValue;
-use Ascetik\UnitscaleCore\Types\FullValue;
 use Ascetik\UnitscaleCore\Types\Scale;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 

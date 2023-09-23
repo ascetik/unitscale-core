@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
+use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
+
 /**
  * Main behaviour for any instance
  * having a value associated to a

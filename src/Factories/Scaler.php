@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Factories;
 
+use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
 use Ascetik\UnitscaleCore\Types\ScaleValueFactory;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
 
@@ -27,5 +28,10 @@ class Scaler implements ScaleValueFactory
     public static function unit(int|float $value, string $unit = ''): CustomScaleValue
     {
         return new CustomScaleValue($value, unit: $unit);
+    }
+
+    public static function adjust(int|float $value, string $unit = ''): AdjustedValue
+    {
+        return self::unit($value, $unit)->adjust();
     }
 }

@@ -12,15 +12,20 @@
 
 declare(strict_types=1);
 
-namespace Ascetik\UnitscaleCore\Types;
+namespace Ascetik\UnitscaleCore\Extensions;
 
 use Ascetik\UnitscaleCore\DTO\ScaleReference;
 use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
+use Ascetik\UnitscaleCore\Types\Scale;
+use Ascetik\UnitscaleCore\Types\ScaleDimension;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 
 /**
- * Full value handling ScaleValue adjustment
+ * Handle ScaleValue adjustment :
+ * The value amount increases while
+ * its scale degree decreases
+ * Can be inverse depending on initial amount
  *
  * @method static toTera()
  * @method static toGiga()
