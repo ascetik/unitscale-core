@@ -83,5 +83,14 @@ echo Scaler::adjust(3000, 'm')->toCenti(); // prints '300000cm'
 
 ```
 
+The unit returned by Scaler is able to perform adjustment. So, adjustment can be done from any scale :
+
+```php
+echo Scaler::unit(30000, 'm')
+    ->fromMilli()
+    ->adjust()
+    ->toKilo(); // prints '30m', amount is not enough to get to kilo
+    
+```
 
 
