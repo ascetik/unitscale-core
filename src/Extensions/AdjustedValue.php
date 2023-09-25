@@ -54,7 +54,7 @@ class AdjustedValue implements ScaleDimension
     protected ScaleValue $highest;
 
     public function __construct(
-        protected readonly ScaleReference $reference
+        private ScaleReference $reference
     ) {
         $this->highest = $this->reference->highest();
     }

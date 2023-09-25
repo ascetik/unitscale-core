@@ -23,6 +23,6 @@ use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
  */
 interface ScaleValueFactory
 {
-    public static function unit(int|float $value, string $unit = ''): ConvertibleDimension;
-    public static function adjust(int|float $value, string $unit = ''): AdjustedValue;
+    public static function unit(int|float $value): ConvertibleDimension;
+    public static function adjust(int|float $value): AdjustedValue;
 }
