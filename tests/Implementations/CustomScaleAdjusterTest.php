@@ -36,8 +36,8 @@ class CustomScaleAdjusterTest extends TestCase
 
     public function testShouldAdaptStartingFromADifferentScale()
     {
-        $value = Scaler::adjust(0.003, 'm')->fromMicro();
-        $this->assertSame('3nm', (string) $value);
+        $value = Scaler::adjust(0.003, 'm');
+        $this->assertSame('3mm', (string) $value);
     }
 
     public function testShouldAdaptStartingFromAdifferentScaleAndLimitedToAnother()
