@@ -23,10 +23,8 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
  *
  * @version 1.0.0
  */
-trait UseScaleReference
+trait UseHighestValue
 {
-    private ScaleReference $reference;
-
     /**
      * Highest ScaleValue from
      * reference value
@@ -52,7 +50,6 @@ trait UseScaleReference
 
     protected function setReference(ScaleReference $reference)
     {
-        $this->reference = $reference;
         $this->highest = $reference->highest();
     }
 }
