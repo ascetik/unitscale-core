@@ -18,8 +18,7 @@ use Ascetik\UnitscaleCore\DTO\ScaleReference;
 use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 use Ascetik\UnitscaleCore\Traits\UseScaleReference;
-use Ascetik\UnitscaleCore\Types\Scale;
-use Ascetik\UnitscaleCore\Types\ScaleDimension;
+use Ascetik\UnitscaleCore\Types\AdjustableValue;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 
 /**
@@ -44,7 +43,7 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
  *
  * @version 1.0.0
  */
-class AdjustedValue implements ScaleDimension
+class AdjustedValue implements AdjustableValue
 {
     use UseScaleReference;
 
@@ -65,9 +64,9 @@ class AdjustedValue implements ScaleDimension
         return (string) $this->highest;
     }
 
-    public static function buildWith(ScaleValue $value): static
+    public static function buildWith(ScaleValue $value): self
     {
         $reference = new ScaleReference($value);
-        return new static($reference);
+        return new self($reference);
     }
 }
