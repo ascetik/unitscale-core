@@ -17,7 +17,7 @@ namespace Ascetik\UnitscaleCore\Extensions;
 use Ascetik\UnitscaleCore\DTO\ScaleReference;
 use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
-use Ascetik\UnitscaleCore\Traits\UseScaleReference;
+use Ascetik\UnitscaleCore\Traits\UseHighestValue;
 use Ascetik\UnitscaleCore\Types\AdjustableValue;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 
@@ -45,10 +45,10 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
  */
 class AdjustedValue implements AdjustableValue
 {
-    use UseScaleReference;
+    use UseHighestValue;
 
     public function __construct(
-        ScaleReference $reference
+        private ScaleReference $reference
     ) {
         $this->setReference($reference);
     }
