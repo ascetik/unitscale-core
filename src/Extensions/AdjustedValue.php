@@ -17,8 +17,8 @@ namespace Ascetik\UnitscaleCore\Extensions;
 use Ascetik\UnitscaleCore\DTO\ScaleReference;
 use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
 use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
-use Ascetik\UnitscaleCore\Types\Scale;
-use Ascetik\UnitscaleCore\Types\ScaleDimension;
+use Ascetik\UnitscaleCore\Traits\UseScaleReference;
+use Ascetik\UnitscaleCore\Types\AdjustableValue;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 
 /**
@@ -43,20 +43,14 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
  *
  * @version 1.0.0
  */
-class AdjustedValue implements ScaleDimension
+class AdjustedValue implements AdjustableValue
 {
-    /**
-     * Highest ScaleValue from
-     * reference value
-     *
-     * @var ScaleValue
-     */
-    protected ScaleValue $highest;
+    use UseScaleReference;
 
     public function __construct(
-        private ScaleReference $reference
+        ScaleReference $reference
     ) {
-        $this->highest = $this->reference->highest();
+        $this->setReference($reference);
     }
 
     public function __call($name, $arguments): static
@@ -70,24 +64,9 @@ class AdjustedValue implements ScaleDimension
         return (string) $this->highest;
     }
 
-    public function raw(): int|float
-    {
-        return $this->highest->raw();
-    }
-
-    public function getScale(): Scale
-    {
-        return $this->highest->getScale();
-    }
-
-    public function getUnit(): string
-    {
-        return $this->highest->getUnit();
-    }
-
-    public static function buildWith(ScaleValue $value): static
+    public static function buildWith(ScaleValue $value): self
     {
         $reference = new ScaleReference($value);
-        return new static($reference);
+        return new self($reference);
     }
 }
