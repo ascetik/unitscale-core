@@ -7,9 +7,9 @@ You can convert an amount of _bytes_ to _megabytes_, _millimeters_ to _kilometer
 
 ## Release notes :
 
-> version 0.2.0
+> version 0.3.1
 
-- Scale adjustment : you can adjust the scale depending of the amount you have.
+- Scale adjustment : a little way opened for missing extension
 
 ### Custom conversion
 
