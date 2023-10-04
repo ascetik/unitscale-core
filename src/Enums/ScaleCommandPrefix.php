@@ -18,6 +18,7 @@ namespace Ascetik\UnitscaleCore\Enums;
  * magic __call() method command
  * starting with *from* or *to*
  *
+ * @deprecated
  * @version 1.0.0
  */
 enum ScaleCommandPrefix
