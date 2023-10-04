@@ -24,19 +24,6 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
  * from pico to tera.
  * Use it with any unit abbreviation : meters (m), inches (in), bytes (b)...
  *
- * @method static fromTera()
- * @method static fromGiga()
- * @method static fromMega()
- * @method static fromKilo()
- * @method static fromHecto()
- * @method static fromDeca()
- * @method static fromBase()
- * @method static fromDeci()
- * @method static fromCenti()
- * @method static fromMilli()
- * @method static fromMicro()
- * @method static fromNano()
- * @method static fromPico()
  * @method static toTera()
  * @method static toGiga()
  * @method static toMega()
@@ -83,9 +70,17 @@ class CustomScaleValue extends ScaleValue
        return AdjustedValue::buildWith($this);
     }
     
-    /** @abstract */
     public static function selector(): CustomScaleFactory
     {
         return new CustomScaleFactory();
     }
+
+    public static function createFromScale(int|float $value, string $scale, string $unit = ''):static
+    {
+        // echo $scale.PHP_EOL;
+        $realScale = self::createScale($scale);
+        // echo $realScale->unit().PHP_EOL;
+        return new self($value, $realScale, $unit);
+    }
+
 }

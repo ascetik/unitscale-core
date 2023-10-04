@@ -1,10 +1,10 @@
 <?php
 
 /**
- * This is part of the UnitScale package.
+ * This is part of the UnitScale Core package.
  *
- * @package    UnitScale
- * @category   Data Transfer Object
+ * @package    unitscale-core
+ * @category   Value Object
  * @license    https://opensource.org/license/mit/  MIT License
  * @copyright  Copyright (c) 2023, Vidda
  * @author     Vidda <vidda@ascetik.fr>
@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Ascetik\UnitscaleCore\DTO;
+namespace Ascetik\UnitscaleCore\Utils;
 
 use Ascetik\UnitscaleCore\Types\Scale;
 
@@ -23,11 +23,11 @@ use Ascetik\UnitscaleCore\Types\Scale;
  *
  * @version 1.0.0
  */
-class NamedScale
+readonly class NamedScale
 {
     public function __construct(
-        public readonly string $name,
-        public readonly Scale $scale
+        public string $name,
+        public Scale $scale
     ) {
     }
 

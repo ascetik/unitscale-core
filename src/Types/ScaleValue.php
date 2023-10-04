@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
-use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
+use Ascetik\UnitscaleCore\Parsers\ScaleCommandParser;
 
 /**
  * Handle general behaviours of a value holding a scale.
@@ -34,10 +34,19 @@ abstract class ScaleValue implements ConvertibleDimension
         $this->scale = $scale ?? static::createScale('base');
     }
 
-    public function __call($method, $arguments)
+    /**
+     * Use commands prefixed by *to*
+     *
+     * @param  string $method
+     * @param  array $arguments
+     *
+     * @return static
+     */
+    public function __call($method, $arguments): static
     {
-        $interpreter = ScaleCommandInterpreter::parse($method);
-        return $interpreter->transpose($this);
+        $checker = new ScaleCommandParser('to');
+        $scaleName = $checker->parse($method)->name;
+        return $this->convertTo($scaleName);
     }
 
     public function __toString()
@@ -82,12 +91,12 @@ abstract class ScaleValue implements ConvertibleDimension
 
     final public function withScale(string|Scale $scale): static
     {
-        return $this->with($this->value, $this->getRealScale($scale));
+        return $this->with($this->value, self::getRealScale($scale));
     }
 
     final public function convertTo(Scale|string $scale): static
     {
-        $scale = $this->getRealScale($scale);
+        $scale = self::getRealScale($scale);
         $value = $this->scale->forward($this->value);
         $value = $scale->backward($value);
         return $this->with($value, $scale);
@@ -103,9 +112,8 @@ abstract class ScaleValue implements ConvertibleDimension
      *
      * @return Scale
      */
-    final public static function createScale(string $name): Scale
+    public static function createScale(string $name): Scale
     {
-        $name = strtolower($name);
         $data = [static::selector(), $name];
         if (method_exists(...$data)) {
             return call_user_func($data);
@@ -113,7 +121,7 @@ abstract class ScaleValue implements ConvertibleDimension
         throw new \BadMethodCallException('The method ' . $name . ' does not exist');
     }
 
-    private function getRealScale(string|Scale $scale): Scale
+    private static function getRealScale(string|Scale $scale): Scale
     {
         return is_string($scale)
             ? static::createScale($scale)
@@ -135,4 +143,10 @@ abstract class ScaleValue implements ConvertibleDimension
     }
 
     abstract public static function selector(): ScaleFactory;
+
+    public static function createFromScale(int|float $value, string $scale): static
+    {
+        $realScale = self::createScale($scale);
+        return new static($value, $realScale);
+    }
 }
