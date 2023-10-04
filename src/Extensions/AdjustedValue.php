@@ -15,8 +15,7 @@ declare(strict_types=1);
 namespace Ascetik\UnitscaleCore\Extensions;
 
 use Ascetik\UnitscaleCore\DTO\ScaleReference;
-use Ascetik\UnitscaleCore\Enums\ScaleCommandPrefix;
-use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
+use Ascetik\UnitscaleCore\Parsers\ScaleCommandParser;
 use Ascetik\UnitscaleCore\Traits\UseHighestValue;
 use Ascetik\UnitscaleCore\Types\AdjustableValue;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
@@ -55,8 +54,8 @@ class AdjustedValue implements AdjustableValue
 
     public function __call($name, $arguments): static
     {
-        $parser = ScaleCommandInterpreter::get($name, ScaleCommandPrefix::TO);
-        return new self($this->reference->limitTo($parser->action));
+        $parser = new ScaleCommandParser('as');
+        return new self($this->reference->limitTo($parser->parse($name)->name));
     }
 
     public function __toString(): string

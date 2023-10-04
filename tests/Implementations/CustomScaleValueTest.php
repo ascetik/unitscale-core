@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ascetik\UnitscaleCore\Tests\Implementations;
 
 use Ascetik\UnitscaleCore\Factories\Scaler;
-use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
-use BadMethodCallException;
 use PHPUnit\Framework\TestCase;
 
 class CustomScaleValueTest extends TestCase

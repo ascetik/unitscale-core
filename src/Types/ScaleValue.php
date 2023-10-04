@@ -34,7 +34,15 @@ abstract class ScaleValue implements ConvertibleDimension
         $this->scale = $scale ?? static::createScale('base');
     }
 
-    public function __call($method, $arguments)
+    /**
+     * Use commands prefixed by *to*
+     *
+     * @param  string $method
+     * @param  array $arguments
+     *
+     * @return static
+     */
+    public function __call($method, $arguments): static
     {
         $checker = new ScaleCommandParser('to');
         $scaleName = $checker->parse($method)->name;
