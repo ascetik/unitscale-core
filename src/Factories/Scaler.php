@@ -45,8 +45,15 @@ class Scaler implements ScaleValueFactory
         return new CustomScaleValue($value, unit: $unit);
     }
 
-
-    public static function __callStatic(string $method, $args)
+    /**
+     * Use commands prefixed by "from"
+     *
+     * @param  string $method prefixed ScaleFactory method
+     * @param  mixed  $args   value and unit to use,
+     *
+     * @return void
+     */
+    public static function __callStatic(string $method, $args): CustomScaleValue
     {
         $checker = new ScaleCommandParser('from');
         $command = $checker->parse($method)->name;
