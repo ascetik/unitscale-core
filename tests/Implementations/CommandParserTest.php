@@ -12,7 +12,7 @@ class CommandParserTest extends TestCase
     public function testCommandParserUsingFrom()
     {
         $parser = new ScaleCommandParser('from');
-        $this->assertSame('milli', $parser->parse('fromMilli'));
+        $this->assertSame('milli', $parser->parse('fromMilli')->name);
     }
 
     public function testCommandParserThrowsExceptionOnPrefixMismatch()
@@ -27,6 +27,6 @@ class CommandParserTest extends TestCase
         $parser = new ScaleCommandParser('as', 'to');
         $as = $parser->parse('asKilo');
         $to = $parser->parse('toKilo');
-        $this->assertSame($as, $to);
+        $this->assertSame($as->name, $to->name);
     }
 }

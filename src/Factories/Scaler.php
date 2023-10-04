@@ -22,19 +22,19 @@ use Ascetik\UnitscaleCore\Values\CustomScaleValue;
 /**
  * Build CustomScaleValues
  *
- * @method CustomScaleValue fromTera(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromGiga(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromMega(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromKilo(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromHecto(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromDeca(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromBase(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromDeci(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromCenti(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromMilli(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromMicro(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromNano(int|float|null $value, string $unit = '')
- * @method CustomScaleValue fromPico(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromTera(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromGiga(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromMega(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromKilo(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromHecto(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromDeca(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromBase(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromDeci(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromCenti(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromMilli(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromMicro(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromNano(int|float|null $value, string $unit = '')
+ * @method static CustomScaleValue fromPico(int|float|null $value, string $unit = '')
  *
  * @version 1.0.0
  */
@@ -48,10 +48,8 @@ class Scaler implements ScaleValueFactory
 
     public static function __callStatic(string $method, $args)
     {
-        echo $method . PHP_EOL;
         $checker = new ScaleCommandParser('from');
-        $command = $checker->parse($method);
-        // on devra prendre une valeur dans fromMethod()
+        $command = $checker->parse($method)->name;
         [$value, $unit] = match (count($args)) {
             2 => [...$args],
             1 => [$args[0], ''],

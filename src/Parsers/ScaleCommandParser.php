@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Parsers;
 
+use Ascetik\UnitscaleCore\Utils\PrefixedCommand;
+
 /**
  * Parse prefixed commands
  *
@@ -38,13 +40,14 @@ class ScaleCommandParser
      *
      * @param  string $method Method MUST start with any registered prefix, Exception thrown otherwise
      */
-    public function parse(string $method): string
+    public function parse(string $method): PrefixedCommand
     {
         foreach($this->prefixes as $prefix)
         {
             if(str_starts_with($method, $prefix))
             {
-                return strtolower(substr($method, strlen($prefix)));
+                $name = strtolower(substr($method, strlen($prefix)));
+                return new PrefixedCommand($prefix, $name);
             }
         }
         throw new \BadMethodCallException('unknown command');
