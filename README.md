@@ -7,9 +7,16 @@ You can convert an amount of _bytes_ to _megabytes_, _millimeters_ to _kilometer
 
 ## Release notes :
 
-> version 0.3.2
+> version 1.0.0
 
-- Scale adjustment : a little way opened for missing extension
+- Base scale selection : use the ScaleValueFactory to get a **ScaleValue** with the correct base scale.
+- Ability to handle magical methods with different prefixes according to a context of use. Older version was limited to *to* and *from*.
+
+## Breaking changes
+
+- Methods prefixed by "from" are now implemented statically by a **ScaleValueFactory**.
+- A **ScaleValue** only handles methods starting with "to". It is no longer authorized to change its own base scale.
+- An **AdjustedScaleValue** uses methods prefixed by *as* instead of *to*: *asMilli()*, * *asKilo()*, ...
 
 ### Custom conversion
 
@@ -18,15 +25,31 @@ Returned instance has default scale (no unit prefix).
 
 ```php
 
-$unit = Scaler::unit(3000, 'b');
+$unit = Scaler::unit(3000, 'b'); // $unit is a CustomScaleValue with default Scale
 
 ```
 
-The first argument is the dimension amount, the second one is the unit to use. Here, we want to convert 3000 bytes.
+The first argument is the dimension amount, the second one is the unit to use. Here, we want to work with 3000 bytes.
 
 This call returns an instance with the amount, given unit and default base scale (no unit prefix).
 
-To get those outputs :
+To select another source scale :
+
+```php
+
+$kilo = Scaler::fromKilo(3000, 'b'); // to get '3000kb'
+
+$milli = Scaler::fromMilli(20,'m'); // to get '20mm'
+
+$firstDumbCall = Scaler::fromAnyDumbyScale(1, 'm'); // throws an "unknown command" exception message
+
+$secondDumbCall = Scaler::useAnyOtherPrefix(1, 'm'); // throws an Exception too
+
+```
+
+All of those methods return instances of **CustomScaleValue** with adapted scale.
+
+To get the outputs from the first example :
 
 ```php
 
@@ -36,28 +59,15 @@ echo $converter->getUnit(); // prints 'b'
 
 ```
 
-To change source scale :
-
-```php
-
-echo $unit->fromKilo(); // prints '3000kb'
-
-```
-And to get final unit :
+You can convert a value to another scale :
 
 ```php
 
 echo $unit->toKilo(); // prints '3kb'
-
+echo $unit->fromKilo(); // throws an exception
 echo $unit; // still prints '3000b'
 
-```
-
-Fluable methods allow chained calls. To get your conversion at once :
-
-```php
-
-echo $unit->fromKilo()->toMega(); // prints '3Mb'
+echo Scaler::fromKilo(3000, 'b')->toMega(); // prints '3Mb'
 
 ```
 
@@ -65,31 +75,23 @@ echo $unit->fromKilo()->toMega(); // prints '3Mb'
 
 You get sometimes a big amount of any unit from any computation and need to reduce this amount in the adapted scale.
 
-It is possible by using *adjust()* factory method to get the highest scale the amount can get :
+It is possible by using _adjust()_ factory method to get the highest scale the amount can get :
 
 ```php
-$adjusted  = Scaler::adjust(3000, 'm');
-echo $adjusted; // prints '3km'
+
+echo Scaler::unit(3000, 'm')->adjust(); // prints '3km'
 
 ```
 
-You can also limit this adjustment to a littler scale :
+You can also limit this adjustment to a different scale :
 
 ```php
-echo Scaler::adjust(3000, 'm')->toHecto(); // prints '30hm'
+echo Scaler::unit(3000, 'm')->adjust()->asHecto(); // prints '30hm'
 
-echo Scaler::adjust(3000, 'm')->toCenti(); // prints '300000cm'
+echo Scaler::unit(3000, 'm')->adjust()->asCenti(); // prints '300000cm'
 
-```
-
-The unit returned by Scaler is able to perform adjustment. So, adjustment can be done from any scale :
-
-```php
-echo Scaler::unit(30000, 'm')
-    ->fromMilli()
+echo Scaler::fromMilli(30000, 'm')
     ->adjust()
-    ->toKilo(); // prints '30m', amount is not enough to get to kilo
+    ->asKilo(); // prints '30m', the amount is not enough to get to kilo
 
 ```
-
-

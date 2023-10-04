@@ -63,4 +63,11 @@ class CustomScaleValueTest extends TestCase
         $unit = Scaler::fromCenti(2000000, 'm')->toHecto();
         $this->assertSame('200hm', (string) $unit);
     }
+
+    public function testConversionFromKiloToMega()
+    {
+        $value = Scaler::fromKilo(3000, 'b')->toMega(); // prints '3Mb'
+        $this->assertSame('3Mb', (string) $value);
+
+    }
 }
