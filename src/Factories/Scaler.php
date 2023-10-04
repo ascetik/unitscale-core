@@ -64,12 +64,4 @@ class Scaler implements ScaleValueFactory
         };
         return CustomScaleValue::createFromScale((float) $value, $command, $unit);
     }
-
-    /**
-     * @deprecated
-     */
-    public static function adjust(int|float $value, string $unit = ''): AdjustedValue
-    {
-        return self::unit($value, $unit)->adjust();
-    }
 }
