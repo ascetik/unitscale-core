@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Ascetik\UnitscaleCore\Containers;
 
 use Ascetik\Storage\Box;
-use Ascetik\UnitscaleCore\DTO\NamedScale;
+use Ascetik\UnitscaleCore\Utils\NamedScale;
 use Ascetik\UnitscaleCore\Types\Scale;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
 use ReflectionClass;

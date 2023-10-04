@@ -42,7 +42,7 @@ class Scaler implements ScaleValueFactory
 {
     public static function unit(int|float $value, string $unit = ''): CustomScaleValue
     {
-        return new CustomScaleValue($value, unit: $unit);
+        return self::fromBase($value, $unit);
     }
 
     /**
@@ -63,13 +63,5 @@ class Scaler implements ScaleValueFactory
             default => [0, '']
         };
         return CustomScaleValue::createFromScale((float) $value, $command, $unit);
-    }
-
-    /**
-     * @deprecated
-     */
-    public static function adjust(int|float $value, string $unit = ''): AdjustedValue
-    {
-        return self::unit($value, $unit)->adjust();
     }
 }

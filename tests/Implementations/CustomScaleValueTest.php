@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ascetik\UnitscaleCore\Tests\Implementations;
 
 use Ascetik\UnitscaleCore\Factories\Scaler;
-use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
-use BadMethodCallException;
 use PHPUnit\Framework\TestCase;
 
 class CustomScaleValueTest extends TestCase
@@ -18,38 +18,15 @@ class CustomScaleValueTest extends TestCase
         $this->assertTrue($value->isInteger());
     }
 
-    /** @deprecated  */
-    public function testScaleCommandInterpreterWithFromCommand()
-    {
-        $parser = ScaleCommandInterpreter::parse('fromBlah');
-        $this->assertSame('blah', $parser->action);
-        $this->assertSame('FROM', $parser->command->name);
-    }
-
-    /** @deprecated  */
-    public function testScaleCommandInterpreterWithToCommand()
-    {
-        $parser = ScaleCommandInterpreter::parse('toBlah');
-        $this->assertSame('blah', $parser->action);
-        $this->assertSame('TO', $parser->command->name);
-    }
-
-    /** @deprecated  */
-    public function testBadCommandShouldThrowAnException()
-    {
-        $this->expectException(BadMethodCallException::class);
-        ScaleCommandInterpreter::parse('getBlah');
-    }
 
     /**
      * change
      */
-    public function testCustomScaleValueConvertionUsingFromCommand()
+    public function testShouldThowExceptionOnUnknownCommand()
     {
+        $this->expectException(\BadMethodCallException::class);
         $value = new CustomScaleValue(1, unit: 'm');
         $value = $value->fromCenti();
-
-        $this->assertSame('1cm', (string) $value);
     }
 
     public function testCustomScaleValueConvertionUsingToCommand()
@@ -65,9 +42,8 @@ class CustomScaleValueTest extends TestCase
      */
     public function testCustomScaleValueWithBothCommands()
     {
-        $value = new CustomScaleValue(1, unit: 'm');
-        $result = $value->fromCenti()->toMilli();
-        $this->assertSame('10mm', (string) $result);
+        $value = Scaler::fromCenti(1, 'm')->toMilli();
+        $this->assertSame('10mm', (string) $value);
     }
 
     /**
@@ -75,9 +51,8 @@ class CustomScaleValueTest extends TestCase
      */
     public function testCustomScaleValueWithLargeTransposition()
     {
-        $value = new CustomScaleValue(1000000, unit: 'm');
-        $result = $value->fromMilli()->toKilo();
-        $this->assertSame('1km', (string) $result);
+        $value = Scaler::fromMilli(1000000, 'm')->toKilo();
+        $this->assertSame('1km', (string) $value);
     }
 
     /**
@@ -85,7 +60,7 @@ class CustomScaleValueTest extends TestCase
      */
     public function testCustomScaleValueFactory()
     {
-        $unit = Scaler::unit(2000000, 'm')->fromCenti()->toHecto();
+        $unit = Scaler::fromCenti(2000000, 'm')->toHecto();
         $this->assertSame('200hm', (string) $unit);
     }
 }

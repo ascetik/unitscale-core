@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is part of the UnitScale package.
+ * This is part of the UnitScale Core package.
  *
  * @package    unitscale-core
  * @category   Adjustment trait

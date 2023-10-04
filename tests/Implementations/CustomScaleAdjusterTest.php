@@ -42,8 +42,7 @@ class CustomScaleAdjusterTest extends TestCase
 
     public function testShouldAdaptStartingFromAdifferentScaleAndLimitedToAnother()
     {
-        $adjusted = Scaler::unit(3000000000000, 'm')
-            ->fromMicro()
+        $adjusted = Scaler::fromMicro(3000000000000, 'm')
             ->adjust()
             ->toKilo();
         $this->assertSame('3000km', (string) $adjusted);
