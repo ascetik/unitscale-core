@@ -88,4 +88,14 @@ class CustomScaleValue extends ScaleValue
     {
         return new CustomScaleFactory();
     }
+
+
+    public static function createFromScale(int|float $value, string $scale, string $unit = ''):static
+    {
+        // echo $scale.PHP_EOL;
+        $realScale = self::createScale($scale);
+        // echo $realScale->unit().PHP_EOL;
+        return new self($value, $realScale, $unit);
+    }
+
 }

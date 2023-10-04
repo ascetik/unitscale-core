@@ -18,6 +18,7 @@ class CustomScaleValueTest extends TestCase
         $this->assertTrue($value->isInteger());
     }
 
+    /** @deprecated  */
     public function testScaleCommandInterpreterWithFromCommand()
     {
         $parser = ScaleCommandInterpreter::parse('fromBlah');
@@ -25,6 +26,7 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('FROM', $parser->command->name);
     }
 
+    /** @deprecated  */
     public function testScaleCommandInterpreterWithToCommand()
     {
         $parser = ScaleCommandInterpreter::parse('toBlah');
@@ -32,12 +34,16 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('TO', $parser->command->name);
     }
 
+    /** @deprecated  */
     public function testBadCommandShouldThrowAnException()
     {
         $this->expectException(BadMethodCallException::class);
         ScaleCommandInterpreter::parse('getBlah');
     }
 
+    /**
+     * change
+     */
     public function testCustomScaleValueConvertionUsingFromCommand()
     {
         $value = new CustomScaleValue(1, unit: 'm');
@@ -54,6 +60,9 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('100cm', (string) $value);
     }
 
+    /**
+     * change
+     */
     public function testCustomScaleValueWithBothCommands()
     {
         $value = new CustomScaleValue(1, unit: 'm');
@@ -61,6 +70,9 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('10mm', (string) $result);
     }
 
+    /**
+     * change
+     */
     public function testCustomScaleValueWithLargeTransposition()
     {
         $value = new CustomScaleValue(1000000, unit: 'm');
@@ -68,6 +80,9 @@ class CustomScaleValueTest extends TestCase
         $this->assertSame('1km', (string) $result);
     }
 
+    /**
+     * change
+     */
     public function testCustomScaleValueFactory()
     {
         $unit = Scaler::unit(2000000, 'm')->fromCenti()->toHecto();
