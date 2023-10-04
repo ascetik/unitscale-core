@@ -82,12 +82,12 @@ abstract class ScaleValue implements ConvertibleDimension
 
     final public function withScale(string|Scale $scale): static
     {
-        return $this->with($this->value, $this->getRealScale($scale));
+        return $this->with($this->value, self::getRealScale($scale));
     }
 
     final public function convertTo(Scale|string $scale): static
     {
-        $scale = $this->getRealScale($scale);
+        $scale = self::getRealScale($scale);
         $value = $this->scale->forward($this->value);
         $value = $scale->backward($value);
         return $this->with($value, $scale);
@@ -113,7 +113,7 @@ abstract class ScaleValue implements ConvertibleDimension
         throw new \BadMethodCallException('The method ' . $name . ' does not exist');
     }
 
-    private function getRealScale(string|Scale $scale): Scale
+    private static function getRealScale(string|Scale $scale): Scale
     {
         return is_string($scale)
             ? static::createScale($scale)
@@ -135,4 +135,10 @@ abstract class ScaleValue implements ConvertibleDimension
     }
 
     abstract public static function selector(): ScaleFactory;
+
+    public static function createFromScale(int|float $value, string $scale): static
+    {
+        $realScale = self::createScale($scale);
+        return new static($value, $realScale);
+    }
 }
