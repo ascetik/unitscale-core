@@ -42,7 +42,7 @@ class Scaler implements ScaleValueFactory
 {
     public static function unit(int|float $value, string $unit = ''): CustomScaleValue
     {
-        return new CustomScaleValue($value, unit: $unit);
+        return self::fromBase($value, $unit);
     }
 
     /**
