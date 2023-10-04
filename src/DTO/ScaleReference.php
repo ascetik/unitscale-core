@@ -17,6 +17,7 @@ namespace Ascetik\UnitscaleCore\DTO;
 use Ascetik\UnitscaleCore\Containers\ScaleContainer;
 use Ascetik\UnitscaleCore\Types\Scale;
 use Ascetik\UnitscaleCore\Types\ScaleValue;
+use Ascetik\UnitscaleCore\Utils\NamedScale;
 
 /**
  * ScaleValue extension handling Scale adjustment
