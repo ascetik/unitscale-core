@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
-use Ascetik\UnitscaleCore\Parsers\ScaleCommandInterpreter;
+use Ascetik\UnitscaleCore\Parsers\ScaleCommandParser;
 
 /**
  * Handle general behaviours of a value holding a scale.
@@ -36,8 +36,9 @@ abstract class ScaleValue implements ConvertibleDimension
 
     public function __call($method, $arguments)
     {
-        $interpreter = ScaleCommandInterpreter::parse($method);
-        return $interpreter->transpose($this);
+        $checker = new ScaleCommandParser('to');
+        $scaleName = $checker->parse($method)->name;
+        return $this->convertTo($scaleName);
     }
 
     public function __toString()
@@ -103,9 +104,8 @@ abstract class ScaleValue implements ConvertibleDimension
      *
      * @return Scale
      */
-    final public static function createScale(string $name): Scale
+    public static function createScale(string $name): Scale
     {
-        $name = strtolower($name);
         $data = [static::selector(), $name];
         if (method_exists(...$data)) {
             return call_user_func($data);
