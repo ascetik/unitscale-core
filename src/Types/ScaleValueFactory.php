@@ -14,14 +14,25 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Types;
 
-use Ascetik\UnitscaleCore\Extensions\AdjustedValue;
+use Ascetik\UnitscaleCore\Parsers\ScaleCommandParser;
+use Ascetik\UnitscaleCore\Types\ScaleValue;
+use Ascetik\UnitscaleCore\Utils\PrefixedCommand;
 
 /**
  * Build ScaleValues
  *
  * @version 1.0.0
  */
-interface ScaleValueFactory
+abstract class ScaleValueFactory
 {
-    public static function unit(int|float $value): ConvertibleDimension;
+    public static function __callStatic(string $method, $args): ScaleValue
+    {
+        $checker = new ScaleCommandParser('from');
+        $command = $checker->parse($method);
+        return static::createWithCommand($command, $args);
+    }
+
+    abstract public static function unit(int|float $value): ConvertibleDimension;
+
+    abstract protected static function createWithCommand(PrefixedCommand $command, array $args = []): ScaleValue;
 }
