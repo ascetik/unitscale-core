@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ascetik\UnitscaleCore\Tests\Implementations;
 
-use Ascetik\UnitscaleCore\Factories\Scaler;
+use Ascetik\UnitscaleCore\Factories\CustomScaler;
 use Ascetik\UnitscaleCore\Values\CustomScaleValue;
 use PHPUnit\Framework\TestCase;
 
@@ -42,7 +42,7 @@ class CustomScaleValueTest extends TestCase
      */
     public function testCustomScaleValueWithBothCommands()
     {
-        $value = Scaler::fromCenti(1, 'm')->toMilli();
+        $value = CustomScaler::fromCenti(1, 'm')->toMilli();
         $this->assertSame('10mm', (string) $value);
     }
 
@@ -51,7 +51,7 @@ class CustomScaleValueTest extends TestCase
      */
     public function testCustomScaleValueWithLargeTransposition()
     {
-        $value = Scaler::fromMilli(1000000, 'm')->toKilo();
+        $value = CustomScaler::fromMilli(1000000, 'm')->toKilo();
         $this->assertSame('1km', (string) $value);
     }
 
@@ -60,13 +60,13 @@ class CustomScaleValueTest extends TestCase
      */
     public function testCustomScaleValueFactory()
     {
-        $unit = Scaler::fromCenti(2000000, 'm')->toHecto();
+        $unit = CustomScaler::fromCenti(2000000, 'm')->toHecto();
         $this->assertSame('200hm', (string) $unit);
     }
 
     public function testConversionFromKiloToMega()
     {
-        $value = Scaler::fromKilo(3000, 'b')->toMega(); // prints '3Mb'
+        $value = CustomScaler::fromKilo(3000, 'b')->toMega(); // prints '3Mb'
         $this->assertSame('3Mb', (string) $value);
 
     }
