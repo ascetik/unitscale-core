@@ -4,7 +4,7 @@
  * This is part of the UnitScale package.
  *
  * @package    unitscale-core
- * @category   Interface
+ * @category   Abstract Factory
  * @license    https://opensource.org/license/mit/  MIT License
  * @copyright  Copyright (c) 2023, Vidda
  * @author     Vidda <vidda@ascetik.fr>
@@ -19,8 +19,10 @@ use Ascetik\UnitscaleCore\Types\ScaleValue;
 use Ascetik\UnitscaleCore\Utils\PrefixedCommand;
 
 /**
- * Build ScaleValues
+ * Build ScaleValues, handling
+ * base scale affectation
  *
+ * @abstract
  * @version 1.0.0
  */
 abstract class ScaleValueFactory
