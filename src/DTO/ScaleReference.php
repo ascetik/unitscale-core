@@ -42,10 +42,10 @@ class ScaleReference
         $this->scales = $scales ?? ScaleContainer::buildFrom($value);
     }
 
-    public function limitTo(string $action): self
+    public function limitTo(string $action): static
     {
         $limit = $this->value::createScale($action);
-        return new self($this->value, $this->scales, $limit);
+        return new static($this->value, $this->scales, $limit);
     }
 
     /**
