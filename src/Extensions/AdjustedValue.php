@@ -58,11 +58,6 @@ class AdjustedValue implements AdjustableValue
         return new self($this->reference->limitTo($parser->parse($name)->name));
     }
 
-    public function __toString(): string
-    {
-        return (string) $this->highest;
-    }
-
     public static function buildWith(ScaleValue $value): self
     {
         $reference = new ScaleReference($value);
