@@ -33,6 +33,11 @@ trait UseHighestValue
      */
     private ScaleValue $highest;
 
+    public function __toString(): string
+    {
+        return (string) $this->highest;
+    }
+
     public function raw(): int|float
     {
         return $this->highest->raw();
