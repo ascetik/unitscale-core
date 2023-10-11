@@ -22,5 +22,5 @@ namespace Ascetik\UnitscaleCore\Types;
  */
 interface AdjustableValue extends ScaleDimension
 {
-    public static function buildWith(ScaleValue $value): self;
+    public static function buildWith(ScaleValue $value): AdjustableValue;
 }
